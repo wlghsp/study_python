@@ -18,10 +18,17 @@ print(Y)
 row_dist = pd.DataFrame(squareform(pdist(df, metric='euclidean')),
                         columns=labels, index=labels)
 
-from scipy.cluster.hierarchy import linkage
+from scipy.cluster.hierarchy import linkage, dendrogram
 
 row_clusters = linkage(pdist(df, metric='euclidean'), method='complete')
 
 pd.DataFrame(row_clusters, columns=['row label 1','row label 2', 'distance', 'no. of items in clust.'],
              index=['cluster %d' % (i+1) for i in range(row_clusters.shape[0])])
 
+import matplotlib.pyplot as plt
+
+row_dendr = dendrogram(row_clusters, labels= labels)
+
+plt.tight_layout()
+plt.ylabel('Euclidean distance')
+plt.show()
